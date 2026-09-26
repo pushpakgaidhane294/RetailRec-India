@@ -1,4 +1,4 @@
-# RetailRec India 🇮🇳
+# RetailRec India
 
 ## Deep Learning-Based Personalized Product Recommendation System Using Neural Collaborative Filtering (NCF)
 
