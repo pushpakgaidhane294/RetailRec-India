@@ -272,56 +272,6 @@ Open your browser at:
 
 ---
 
-## 📤 Upload to GitHub from VS Code
-
-Follow these commands in your VS Code terminal to push your project to a new GitHub repository:
-
-```powershell
-# 1. Check git status (working tree is clean on branch main)
-git status
-
-# 2. Add your GitHub remote repository
-# (Create an empty repo on https://github.com/new first)
-git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/Retail_Rec-India.git
-
-# 3. Push to GitHub
-git push -u origin main
-```
-
----
-
-## 🚀 Cloud Deployment on Render
-
-The repository is configured for automated deployment on [Render](https://render.com/).
-
-### Method 1: Using the Render Blueprint (Recommended)
-1. Log in to [dashboard.render.com](https://dashboard.render.com).
-2. Click **New +** $\rightarrow$ select **Blueprint**.
-3. Connect your GitHub account and choose your `Retail_Rec-India` repository.
-4. Render automatically reads `render.yaml` and configures:
-   - **Environment:** Python 3.11.8
-   - **Build Command:** `pip install -r requirements.txt && python scripts/prepare_data.py`
-   - **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-   - **Health Check Path:** `/health`
-5. Click **Apply**. Your service will be live in 2–3 minutes at `https://retailrec-india.onrender.com`.
-
-### Method 2: Manual Web Service Setup
-1. On Render, click **New +** $\rightarrow$ **Web Service**.
-2. Select your repository.
-3. Configure settings:
-   - **Name:** `retailrec-india`
-   - **Runtime:** `Python 3`
-   - **Branch:** `main`
-   - **Build Command:** `pip install -r requirements.txt && python scripts/prepare_data.py`
-   - **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-   - **Plan:** Free
-4. Under **Advanced Settings**:
-   - **Health Check Path:** `/health`
-   - **Environment Variable:** `PYTHON_VERSION` = `3.11.8`
-5. Click **Deploy Web Service**.
-
----
-
 ## 🌐 API Reference
 
 | Method | Endpoint | Description |
@@ -339,36 +289,5 @@ The repository is configured for automated deployment on [Render](https://render
 | `GET` | `/api/model/metrics` | Evaluated test metrics (Hit Rate@K, Recall@K, Precision@K) |
 | `GET` | `/api/model/history` | Epoch-by-epoch training and validation loss/accuracy curves |
 
----
-
-## 💡 Frequently Asked Questions
-
-### 1. What is the difference between Dashboard (`/`) and Analytics (`/analytics`)?
-- **Dashboard (`/`)** is the **Executive Cockpit & Launchpad**. It displays glanceable KPI metric cards, high-level macro charts, and the **1-Click AI Recommendation Sandbox** to immediately test predictions for sample customers.
-- **Analytics (`/analytics`)** is the **Commercial Merchandising Suite**. In addition to macro charts, it provides **granular tabular reports**:
-  1. *Category Performance Table*: Exact revenue, profit, quantity, and market share across Clothing, Electronics, and Furniture.
-  2. *Top 10 Sub-Categories Table*: Ranked merchandise analysis with unit prices, units sold, and unique customer reach.
-
-### 2. Why are "Total Spend" and "Average Order Value (AOV)" sometimes the same?
-$$\text{Average Order Value} = \frac{\text{Total Spending}}{\text{Total Orders}}$$
-In the authentic dataset, **68% of customers placed exactly 1 order** (which often contains multiple items in that single order). For customers with 1 order (e.g. `CUST-001` or `CUST-103`), $\text{Total Spend} / 1 = \text{Total Spend}$, so the numbers are mathematically identical. For repeat customers (e.g. `CUST-002`, `CUST-008`), the AOV correctly divides total spend by their order count.
-
-### 3. Why is the Customer Profile shown on both Customer History and AI Recommendations?
-- **Customer History (`/history`)** is **Backward-looking (Audit)**: It displays recorded historical purchases (what the customer has *already* bought).
-- **AI Recommendations (`/recommendations`)** is **Forward-looking (Predictive)**: It uses the NCF model to predict what they *will buy next* (filtering out already-purchased items). Showing the profile above the recommendations provides immediate merchandiser context (e.g., whether a recommended item matches the customer's typical spending level).
-
----
-
-## 📜 Academic & Presentation Defense (15-Mark Script)
-
-> *"We engineered an end-to-end personalized product recommendation system for Indian e-commerce transactions using Neural Collaborative Filtering (NCF).*
-> 
-> *Using the authentic Madhav E-Commerce sales dataset covering 336 customers and 17 product sub-categories across 19 Indian states, we built a non-linear deep learning model. We projected customers and products into continuous 32-dimensional embedding spaces, combined them through a multi-layer neural network with dropout regularization, and trained on temporal holdout splits with zero-leakage negative sampling.*
-> 
-> *The model achieves 71.83% binary test accuracy and a Hit Rate@10 of 65.04%. The system is deployed using FastAPI for sub-10ms inference and served via a lightweight, responsive vanilla frontend with a tri-color retail design system ready for cloud production on Render."*
-
----
-
 ## 📄 License
-
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
