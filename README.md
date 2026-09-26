@@ -224,7 +224,7 @@ Retail_Rec-India/
 
 ### Step 1: Clone Repository
 ```bash
-git clone https://github.com/<YOUR_GITHUB_USERNAME>/Retail_Rec-India.git
+git clone https://github.com/pushpakgaidhane294/RetailRec-India
 cd Retail_Rec-India
 ```
 
