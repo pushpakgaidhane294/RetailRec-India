@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Purchase History | RetailRec India</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand">
+        <div class="brand-icon">₹</div>
+        <div class="brand-text">
+          <h1>RetailRec India <span class="brand-badge">NCF Engine</span></h1>
+          <p>Deep Learning-Based Personalized Recommendation System</p>
+        </div>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Dashboard</a>
+        <a href="/recommendations">AI Recommendations</a>
+        <a href="/history" class="active">Customer History</a>
+        <a href="/products">Product Explorer</a>
+        <a href="/analytics">Analytics</a>
+        <a href="/model">Model Performance</a>
+        <a href="/about">About</a>
+      </nav>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span id="historyNavStatus">336 Customers Available</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-tag">📜 Transactional Audit Log</div>
+        <h2>Customer Purchase History</h2>
+        <p>Review real sales orders, products purchased, quantities, and profit margins from the authentic Indian e-commerce transactions dataset.</p>
+      </div>
+    </section>
+
+    <!-- Search / Filter Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">🔍 Customer Lookup & Transaction Ledger</h3>
+          <p class="card-subtitle">Search or pick any customer from the 336 authentic consumers in the dataset.</p>
+        </div>
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-muted);">Quick Customer Picker:</span>
+          <select id="historyCustomerSelect" class="form-control" style="display: inline-block; width: auto; font-size: 0.85rem; padding: 0.35rem 0.65rem;">
+            <option value="">-- Choose from all 336 Customers --</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Autocomplete Input -->
+        <div class="form-group" style="flex: 2;">
+          <label class="form-label" for="historyCustInput">Search Customer (Name, ID, City, or State)</label>
+          <div class="autocomplete-container">
+            <input
+              type="text"
+              id="historyCustInput"
+              class="form-control"
+              placeholder="e.g. Harivansh, CUST-001, Mathura, Mumbai..."
+              autocomplete="off"
+              value="CUST-001"
+            >
+            <div id="historyAutocompleteDropdown" class="autocomplete-dropdown"></div>
+          </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="form-group" style="flex: 1;">
+          <label class="form-label" for="historyCategorySelect">Category Filter</label>
+          <select id="historyCategorySelect" class="form-control">
+            <option value="all">All Categories</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Furniture">Furniture</option>
+          </select>
+        </div>
+
+        <!-- Search Keyword Filter -->
+        <div class="form-group" style="flex: 1;">
+          <label class="form-label" for="historySearchInput">Filter Item / Order ID</label>
+          <input
+            type="text"
+            id="historySearchInput"
+            class="form-control"
+            placeholder="e.g. Saree, Chair, B-25..."
+          >
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group" style="flex: 1;">
+          <button id="viewHistoryBtn" type="button" class="btn btn-primary" style="width: 100%; height: 42px;">
+            View Purchase History
+          </button>
+        </div>
+      </div>
+
+      <!-- Presets for fast exploration -->
+      <div style="margin-top: 1rem; display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Top Spenders & Sample Customers:</span>
+        <span class="preset-pill" onclick="loadCustomerHistoryPreset('CUST-103')">Harivansh (CUST-103 • ₹9,902)</span>
+        <span class="preset-pill" onclick="loadCustomerHistoryPreset('CUST-142')">Madan Mohan (CUST-142 • ₹7,766)</span>
+        <span class="preset-pill" onclick="loadCustomerHistoryPreset('CUST-260')">Shiva (CUST-260 • ₹6,339)</span>
+        <span class="preset-pill" onclick="loadCustomerHistoryPreset('CUST-100')">Gopal (CUST-100 • 6 Orders)</span>
+        <span class="preset-pill" onclick="loadCustomerHistoryPreset('CUST-143')">Madhav (CUST-143)</span>
+        <span class="preset-pill" onclick="loadCustomerHistoryPreset('CUST-001')">Aakanksha (CUST-001)</span>
+      </div>
+    </div>
+
+    <!-- Alert / Message Container -->
+    <div id="historyAlert"></div>
+
+    <!-- Loading State -->
+    <div id="historyLoadingState" style="display: none;" class="state-box">
+      <div class="spinner"></div>
+      <h4 class="state-title">Retrieving Purchase History...</h4>
+      <p class="state-desc">Loading transaction records from historical sales database.</p>
+    </div>
+
+    <!-- Customer Overview Box -->
+    <div id="historyCustomerOverview" style="display: none;" class="customer-summary-box"></div>
+
+    <!-- Purchase History Table Card -->
+    <div class="card" id="historyCard" style="display: none;">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title" id="historyTableTitle">Purchased Items & Orders</h3>
+          <p class="card-subtitle" id="historyTableSubtitle">Historical purchase records sorted chronologically.</p>
+        </div>
+        <div>
+          <button id="recommendForThisCustBtn" class="btn btn-primary btn-sm">
+            ⚡ Recommend For This Customer →
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table" id="historyTable">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Order Date</th>
+              <th>Category</th>
+              <th>Sub-Category</th>
+              <th>Qty</th>
+              <th>Amount</th>
+              <th>Profit</th>
+              <th>Payment Mode</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody"></tbody>
+        </table>
+      </div>
+
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div>
+        <strong>RetailRec India</strong> &copy; 2026 &bull; Authentic Indian E-Commerce Transaction Ledger
+      </div>
+      <div class="footer-tech">
+        <span>FastAPI</span>
+        <span>Pandas</span>
+        <span>Vanilla JS</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/api.js?v=2"></script>
+  <script src="/js/history.js?v=2"></script>
+</body>
+</html>

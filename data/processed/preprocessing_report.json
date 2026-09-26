@@ -1,0 +1,22 @@
+{
+  "dataset_name": "Madhav E-Commerce Sales Dataset",
+  "raw_orders_row_count": 500,
+  "raw_details_row_count": 1500,
+  "raw_missing_values_orders": 0,
+  "raw_missing_values_details": 0,
+  "raw_duplicates_orders": 0,
+  "raw_duplicates_details": 0,
+  "cleaned_row_count": 1500,
+  "missing_values_after_cleaning": 0,
+  "invalid_details_removed": 0,
+  "invalid_dates_removed": 0,
+  "number_of_customers": 336,
+  "number_of_orders": 500,
+  "number_of_categories": 3,
+  "number_of_subcategories": 17,
+  "total_sales_inr": 437771.0,
+  "total_quantity": 5615,
+  "total_profit_inr": 36963.0,
+  "min_order_date": "2018-01-01",
+  "max_order_date": "2018-12-31"
+}

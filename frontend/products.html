@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Catalog Explorer | RetailRec India</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand">
+        <div class="brand-icon">₹</div>
+        <div class="brand-text">
+          <h1>RetailRec India <span class="brand-badge">NCF Engine</span></h1>
+          <p>Deep Learning-Based Personalized Recommendation System</p>
+        </div>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Dashboard</a>
+        <a href="/recommendations">AI Recommendations</a>
+        <a href="/history">Customer History</a>
+        <a href="/products" class="active">Product Explorer</a>
+        <a href="/analytics">Analytics</a>
+        <a href="/model">Model Performance</a>
+        <a href="/about">About</a>
+      </nav>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span>17 Sub-Categories</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-tag">📦 Verified Product Catalog</div>
+        <h2>Product & Sub-Category Explorer</h2>
+        <p>Explore the 17 authentic product sub-categories across Clothing, Electronics, and Furniture. All sales volumes, customer counts, and average prices are computed directly from actual sales transactions.</p>
+      </div>
+    </section>
+
+    <!-- Filters & Search -->
+    <div class="card">
+      <div class="form-row">
+        <div class="form-group" style="flex: 2;">
+          <label class="form-label" for="productSearchInput">Search Sub-Category or Category</label>
+          <input
+            type="text"
+            id="productSearchInput"
+            class="form-control"
+            placeholder="Search e.g. Phone, Saree, Chair..."
+          >
+        </div>
+
+        <div class="form-group" style="flex: 1;">
+          <label class="form-label" for="productCategorySelect">Category Filter</label>
+          <select id="productCategorySelect" class="form-control">
+            <option value="all">All Categories</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Furniture">Furniture</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="flex: 1;">
+          <label class="form-label" for="productSortSelect">Sort By</label>
+          <select id="productSortSelect" class="form-control">
+            <option value="total_sales">Total Sales (₹) High to Low</option>
+            <option value="total_quantity_sold">Units Sold High to Low</option>
+            <option value="avg_price">Avg Line Price High to Low</option>
+            <option value="customer_count">Customers Count High to Low</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Cards Grid -->
+    <div id="productsGrid" class="recs-grid"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div>
+        <strong>RetailRec India</strong> &copy; 2026 &bull; Authentic Indian Retail Product Catalog
+      </div>
+      <div class="footer-tech">
+        <span>FastAPI</span>
+        <span>Pandas</span>
+        <span>Vanilla JS</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/products.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "to_index": {
+    "Accessories": 0,
+    "Bookcases": 1,
+    "Chairs": 2,
+    "Electronic Games": 3,
+    "Furnishings": 4,
+    "Hankerchief": 5,
+    "Kurti": 6,
+    "Leggings": 7,
+    "Phones": 8,
+    "Printers": 9,
+    "Saree": 10,
+    "Shirt": 11,
+    "Skirt": 12,
+    "Stole": 13,
+    "T-shirt": 14,
+    "Tables": 15,
+    "Trousers": 16
+  },
+  "to_label": {
+    "0": "Accessories",
+    "1": "Bookcases",
+    "2": "Chairs",
+    "3": "Electronic Games",
+    "4": "Furnishings",
+    "5": "Hankerchief",
+    "6": "Kurti",
+    "7": "Leggings",
+    "8": "Phones",
+    "9": "Printers",
+    "10": "Saree",
+    "11": "Shirt",
+    "12": "Skirt",
+    "13": "Stole",
+    "14": "T-shirt",
+    "15": "Tables",
+    "16": "Trousers"
+  },
+  "n_classes": 17
+}

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RetailRec India | Deep Learning Product Recommendation Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- Chart.js CDN for interactive visual analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand">
+        <div class="brand-icon">₹</div>
+        <div class="brand-text">
+          <h1>RetailRec India <span class="brand-badge">NCF Engine</span></h1>
+          <p>Deep Learning-Based Personalized Recommendation System</p>
+        </div>
+      </a>
+      <nav class="main-nav">
+        <a href="/" class="active">Dashboard</a>
+        <a href="/recommendations">AI Recommendations</a>
+        <a href="/history">Customer History</a>
+        <a href="/products">Product Explorer</a>
+        <a href="/analytics">Analytics</a>
+        <a href="/model">Model Performance</a>
+        <a href="/about">About</a>
+      </nav>
+      <div class="nav-status" id="navStatus">
+        <span class="status-dot"></span>
+        <span id="navStatusText">API Ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Hero Banner -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-tag">🇮🇳 Authentic Indian E-Commerce Recommender</div>
+        <h2>Personalized Recommendations Powered by Neural Collaborative Filtering</h2>
+        <p>
+          Trained on authentic Madhav E-Commerce Indian retail transactions. Our deep neural network pairs customer embeddings with product embeddings to uncover personalized purchasing affinities without heuristic shortcuts.
+        </p>
+        <div class="hero-actions">
+          <a href="/recommendations" class="btn btn-primary">Try AI Recommendations →</a>
+          <a href="/products" class="btn btn-secondary">Explore 17 Sub-Categories</a>
+          <a href="/model" class="btn btn-secondary">View NCF Metrics</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top KPI Summary Cards -->
+    <section class="kpi-grid" id="kpiGrid">
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Total Customers</span>
+          <div class="kpi-icon blue">👥</div>
+        </div>
+        <div class="kpi-value" id="kpiCustomers">336</div>
+        <div class="kpi-sub">Unique Indian consumers</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Total Orders</span>
+          <div class="kpi-icon purple">📦</div>
+        </div>
+        <div class="kpi-value" id="kpiOrders">500</div>
+        <div class="kpi-sub">Across 19 Indian states</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Total Sales (INR)</span>
+          <div class="kpi-icon green">₹</div>
+        </div>
+        <div class="kpi-value" id="kpiSales">₹4,37,771</div>
+        <div class="kpi-sub">Gross revenue in 2018</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Quantity Sold</span>
+          <div class="kpi-icon amber">🛍️</div>
+        </div>
+        <div class="kpi-value" id="kpiQuantity">5,615</div>
+        <div class="kpi-sub">Total product units</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Net Profit (INR)</span>
+          <div class="kpi-icon green">📈</div>
+        </div>
+        <div class="kpi-value" id="kpiProfit">₹36,963</div>
+        <div class="kpi-sub">Cumulative order margin</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Avg Order Value</span>
+          <div class="kpi-icon cyan">💳</div>
+        </div>
+        <div class="kpi-value" id="kpiAOV">₹875.54</div>
+        <div class="kpi-sub">Per transaction average</div>
+      </div>
+    </section>
+
+    <!-- Quick Recommendations Spotlight -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">⚡ Instant Customer Recommendation Sandbox</h3>
+          <p class="card-subtitle">Select any customer below to instantly generate deep-learning recommendations with their trained embeddings.</p>
+        </div>
+        <a href="/recommendations" class="btn btn-outline btn-sm">Full Recommendation Studio →</a>
+      </div>
+      <div class="presets-list" id="quickCustomerPresets">
+        <span class="preset-pill" onclick="window.location.href='/recommendations?id=CUST-001'">Aakanksha (CUST-001)</span>
+        <span class="preset-pill" onclick="window.location.href='/recommendations?id=CUST-100'">Harivansh (CUST-100)</span>
+        <span class="preset-pill" onclick="window.location.href='/recommendations?id=CUST-165'">Madhav (CUST-165)</span>
+        <span class="preset-pill" onclick="window.location.href='/recommendations?id=CUST-098'">Gopal (CUST-098)</span>
+        <span class="preset-pill" onclick="window.location.href='/recommendations?id=CUST-276'">Sidharth (CUST-276)</span>
+        <span class="preset-pill" onclick="window.location.href='/recommendations?id=CUST-200'">Pooja (CUST-200)</span>
+        <span class="preset-pill" onclick="window.location.href='/recommendations?id=CUST-120'">Kavita (CUST-120)</span>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-grid">
+      <!-- Monthly Sales & Profit Trend -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Monthly Revenue & Profit (2018)</h4>
+            <p class="card-subtitle">Actual monthly sales timeline from sales transactions</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="monthlyChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Sales by Category -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Category Revenue Share</h4>
+            <p class="card-subtitle">Distribution across Clothing, Electronics, and Furniture</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="categoryChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Top States by Sales -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Top 7 Indian States by Revenue</h4>
+            <p class="card-subtitle">Geographic market concentration across India</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="stateChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Payment Mode Breakdown -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Payment Mode Distribution</h4>
+            <p class="card-subtitle">Customer transaction preferences (COD, UPI, Credit Card, etc.)</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="paymentChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div>
+        <strong>RetailRec India</strong> &copy; 2026 &bull; Authentic Indian E-Commerce Recommendation Engine
+      </div>
+      <div class="footer-tech">
+        <span>TensorFlow / Keras 3</span>
+        <span>Neural Collaborative Filtering</span>
+        <span>FastAPI</span>
+        <span>Vanilla JS</span>
+        <span>Render Ready</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

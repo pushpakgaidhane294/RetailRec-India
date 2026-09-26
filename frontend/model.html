@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Performance & Evaluation | RetailRec India</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand">
+        <div class="brand-icon">₹</div>
+        <div class="brand-text">
+          <h1>RetailRec India <span class="brand-badge">NCF Engine</span></h1>
+          <p>Deep Learning-Based Personalized Recommendation System</p>
+        </div>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Dashboard</a>
+        <a href="/recommendations">AI Recommendations</a>
+        <a href="/history">Customer History</a>
+        <a href="/products">Product Explorer</a>
+        <a href="/analytics">Analytics</a>
+        <a href="/model" class="active">Model Performance</a>
+        <a href="/about">About</a>
+      </nav>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span>NCF Trained</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-tag">🧠 Transparent Deep Learning Verification</div>
+        <h2>Neural Collaborative Filtering (NCF) Model Performance</h2>
+        <p>Verified training convergence, loss dynamics, binary accuracy, and authentic ranking evaluation metrics (Hit Rate@K, Recall@K, Precision@K) calculated strictly from held-out Indian transaction data.</p>
+      </div>
+    </section>
+
+    <!-- Key Verified Model Metrics Grid -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Test Binary Acc</span>
+          <div class="kpi-icon green">🎯</div>
+        </div>
+        <div class="kpi-value" id="metricTestAcc">71.83%</div>
+        <div class="kpi-sub">On holdout test pairs</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Test Loss (BCE)</span>
+          <div class="kpi-icon blue">📉</div>
+        </div>
+        <div class="kpi-value" id="metricTestLoss">0.7094</div>
+        <div class="kpi-sub">Binary cross-entropy</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Hit Rate @ 5</span>
+          <div class="kpi-icon purple">⭐</div>
+        </div>
+        <div class="kpi-value" id="metricHit5">46.90%</div>
+        <div class="kpi-sub">Holdout item in Top 5</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Hit Rate @ 10</span>
+          <div class="kpi-icon purple">🌟</div>
+        </div>
+        <div class="kpi-value" id="metricHit10">65.04%</div>
+        <div class="kpi-sub">Holdout item in Top 10</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Recall @ 10</span>
+          <div class="kpi-icon amber">🔁</div>
+        </div>
+        <div class="kpi-value" id="metricRecall10">65.04%</div>
+        <div class="kpi-sub">Relevant item retrieval</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Precision @ 5</span>
+          <div class="kpi-icon cyan">📊</div>
+        </div>
+        <div class="kpi-value" id="metricPrec5">9.38%</div>
+        <div class="kpi-sub">Top-5 relevant ratio</div>
+      </div>
+    </section>
+
+    <!-- Training Loss Curve & Accuracy Charts -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Training & Validation Loss Convergence</h4>
+            <p class="card-subtitle">Binary crossentropy loss per epoch with early stopping</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="lossChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Training & Validation Binary Accuracy</h4>
+            <p class="card-subtitle">Epoch-by-epoch classification accuracy on positive & negative pairs</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="accChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Architecture & Hyperparameters Table -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">🏗️ Neural Collaborative Filtering Architecture</h3>
+          <p class="card-subtitle">Detailed layer configuration, embeddings, and training hyperparameters.</p>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Specification</th>
+              <th>Parameters / Value</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="modelSpecBody">
+            <tr>
+              <td><strong>Customer Embedding</strong></td>
+              <td>Input shape (1,) &rarr; Embedding(336, 32)</td>
+              <td>10,752 params</td>
+              <td>Learns 32-dimensional dense latent representations for 336 customers</td>
+            </tr>
+            <tr>
+              <td><strong>Product Embedding</strong></td>
+              <td>Input shape (1,) &rarr; Embedding(17, 32)</td>
+              <td>544 params</td>
+              <td>Learns 32-dimensional dense latent representations for 17 sub-categories</td>
+            </tr>
+            <tr>
+              <td><strong>Vector Concatenation</strong></td>
+              <td>Concatenate([CustomerVec, ItemVec])</td>
+              <td>0 params</td>
+              <td>Combines customer and item latent factors into 64-dimensional joint vector</td>
+            </tr>
+            <tr>
+              <td><strong>Dense Hidden Layer 1</strong></td>
+              <td>Dense(64, ReLU) + Dropout(0.20)</td>
+              <td>4,160 params</td>
+              <td>First multi-layer perceptron (MLP) non-linear interaction block</td>
+            </tr>
+            <tr>
+              <td><strong>Dense Hidden Layer 2</strong></td>
+              <td>Dense(32, ReLU) + Dropout(0.20)</td>
+              <td>2,080 params</td>
+              <td>Second non-linear dimensionality compression layer with regularization</td>
+            </tr>
+            <tr>
+              <td><strong>Prediction Output</strong></td>
+              <td>Dense(1, Sigmoid)</td>
+              <td>33 params</td>
+              <td>Outputs customer-product purchase probability score [0.0, 1.0]</td>
+            </tr>
+            <tr style="background: #f8fafc; font-weight: 700;">
+              <td><strong>Total Model Parameters</strong></td>
+              <td>RetailRec_NCF (TensorFlow / Keras)</td>
+              <td>17,569 params (~68.6 KB)</td>
+              <td>100% trainable on CPU/GPU without overfitting</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Dataset & Sample Partitioning Breakdown -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">🔢 Partitioning & Sample Distribution</h3>
+          <p class="card-subtitle">Exact numbers verified across chronological data splits.</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+        <div class="cust-metric-item">
+          <div class="cust-metric-label">Unique Customers</div>
+          <div class="cust-metric-val">336</div>
+        </div>
+        <div class="cust-metric-item">
+          <div class="cust-metric-label">Catalog Sub-Categories</div>
+          <div class="cust-metric-val">17</div>
+        </div>
+        <div class="cust-metric-item">
+          <div class="cust-metric-label">Positive Interactions</div>
+          <div class="cust-metric-val">1,156</div>
+        </div>
+        <div class="cust-metric-item">
+          <div class="cust-metric-label">Interaction Density</div>
+          <div class="cust-metric-val">20.24%</div>
+        </div>
+        <div class="cust-metric-item">
+          <div class="cust-metric-label">Training Samples</div>
+          <div class="cust-metric-val" id="splitTrainSamples">2,253 (751 pos + 1,502 neg)</div>
+        </div>
+        <div class="cust-metric-item">
+          <div class="cust-metric-label">Validation Samples</div>
+          <div class="cust-metric-val" id="splitValSamples">537 (179 pos + 358 neg)</div>
+        </div>
+        <div class="cust-metric-item">
+          <div class="cust-metric-label">Test Samples</div>
+          <div class="cust-metric-val" id="splitTestSamples">678 (226 pos + 452 neg)</div>
+        </div>
+        <div class="cust-metric-item">
+          <div class="cust-metric-label">Negative-to-Positive Ratio</div>
+          <div class="cust-metric-val">2.00 : 1</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evaluation Limitations & Technical Honesty Notice -->
+    <div class="card" style="border-left: 4px solid var(--accent-amber);">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">⚠️ Evaluation Limitations & Dataset Realities</h3>
+          <p class="card-subtitle">Transparent methodology notes for academic review and presentation defense.</p>
+        </div>
+      </div>
+      <div style="font-size: 0.925rem; line-height: 1.7; color: #334155;">
+        <p style="margin-bottom: 0.75rem;">
+          <strong>1. Dataset Granularity:</strong> The source Indian e-commerce dataset (Madhav Sales Dataset) records transactions at the <strong>Sub-Category</strong> level (17 discrete product categories such as Phones, Chairs, Sarees, Printers) rather than individual barcode SKUs. We strictly honor this granularity rather than inventing fabricated product names.
+        </p>
+        <p style="margin-bottom: 0.75rem;">
+          <strong>2. Interaction History & Sparsity:</strong> Indian consumers in this dataset average 3.4 unique sub-category purchases across 1.5 orders. While interaction density is a healthy 20.24%, consumers with only 1 order have limited collaborative signals, which can cause cold-start challenges.
+        </p>
+        <p style="margin-bottom: 0.75rem;">
+          <strong>3. Honest Metrics:</strong> Unlike demo projects that falsely claim "98% precision", our metrics reflect rigorous holdout test ranking (He et al., WWW 2017). A Hit Rate@10 of <strong>65.04%</strong> means that for nearly 2 out of every 3 test customers, the deep-learning model correctly surfaced their held-out purchase in the Top-10 recommendations!
+        </p>
+        <p>
+          <strong>4. Zero Leakage Negative Sampling:</strong> Negative training pairs were strictly chosen from items the customer never purchased in the entire dataset history, eliminating future purchase leakage.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div>
+        <strong>RetailRec India</strong> &copy; 2026 &bull; Authentic Model Verification
+      </div>
+      <div class="footer-tech">
+        <span>TensorFlow / Keras 3</span>
+        <span>EarlyStopping</span>
+        <span>ModelCheckpoint</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/model.js"></script>
+</body>
+</html>

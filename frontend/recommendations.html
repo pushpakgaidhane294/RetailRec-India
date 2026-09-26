@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Recommendations | RetailRec India</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand">
+        <div class="brand-icon">₹</div>
+        <div class="brand-text">
+          <h1>RetailRec India <span class="brand-badge">NCF Engine</span></h1>
+          <p>Deep Learning-Based Personalized Recommendation System</p>
+        </div>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Dashboard</a>
+        <a href="/recommendations" class="active">AI Recommendations</a>
+        <a href="/history">Customer History</a>
+        <a href="/products">Product Explorer</a>
+        <a href="/analytics">Analytics</a>
+        <a href="/model">Model Performance</a>
+        <a href="/about">About</a>
+      </nav>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span>NCF Ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-tag">✨ Deep Learning Inference Engine</div>
+        <h2>AI-Powered Product Recommendations</h2>
+        <p>Discover personalized products using deep learning and customer purchase behavior.</p>
+      </div>
+    </section>
+
+    <!-- Interactive User Input Card -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">🔍 Select or Search Customer</h3>
+          <p class="card-subtitle">Choose a customer from the historical Indian sales dataset to generate personalized neural recommendations.</p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Customer Autocomplete Input -->
+        <div class="form-group" style="flex: 2;">
+          <label class="form-label" for="customerInput">Customer ID or Name</label>
+          <div class="autocomplete-container">
+            <input
+              type="text"
+              id="customerInput"
+              class="form-control"
+              placeholder="e.g. CUST-001 or Harivansh..."
+              autocomplete="off"
+            >
+            <div id="autocompleteDropdown" class="autocomplete-dropdown"></div>
+          </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="form-group" style="flex: 1;">
+          <label class="form-label" for="categorySelect">Category Filter</label>
+          <select id="categorySelect" class="form-control">
+            <option value="all">All Categories</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Furniture">Furniture</option>
+          </select>
+        </div>
+
+        <!-- Top-K Selector -->
+        <div class="form-group" style="flex: 1;">
+          <label class="form-label" for="topKSelect">Top Recommendations</label>
+          <select id="topKSelect" class="form-control">
+            <option value="3">Top 3 Items</option>
+            <option value="5" selected>Top 5 Items</option>
+            <option value="10">Top 10 Items</option>
+          </select>
+        </div>
+
+        <!-- Generate Button -->
+        <div class="form-group" style="flex: 1;">
+          <button id="generateBtn" class="btn btn-primary" style="width: 100%; height: 42px;">
+            ⚡ Generate AI Recommendations
+          </button>
+        </div>
+      </div>
+
+      <!-- Exclusion Checkbox & Quick Customer Presets -->
+      <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; cursor: pointer;">
+          <input type="checkbox" id="excludePurchased" checked>
+          Exclude products previously purchased by this customer
+        </label>
+
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-muted); margin-right: 0.5rem;">Quick Select:</span>
+          <span class="preset-pill" onclick="selectPreset('CUST-001')">CUST-001 (Aakanksha)</span>
+          <span class="preset-pill" onclick="selectPreset('CUST-100')">CUST-100 (Harivansh)</span>
+          <span class="preset-pill" onclick="selectPreset('CUST-165')">CUST-165 (Madhav)</span>
+          <span class="preset-pill" onclick="selectPreset('CUST-098')">CUST-098 (Gopal)</span>
+          <span class="preset-pill" onclick="selectPreset('CUST-276')">CUST-276 (Sidharth)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert / Warning Container -->
+    <div id="alertContainer"></div>
+
+    <!-- Customer Summary Card (Rendered dynamically) -->
+    <div id="customerSummaryCard" style="display: none;" class="customer-summary-box"></div>
+
+    <!-- Loading State -->
+    <div id="loadingState" style="display: none;" class="state-box">
+      <div class="spinner"></div>
+      <h4 class="state-title">AI model is analyzing customer-product interactions...</h4>
+      <p class="state-desc">Combining 32-dimensional customer embedding and candidate product embeddings through the deep neural network.</p>
+    </div>
+
+    <!-- Recommendation Results Container -->
+    <div id="recommendationsSection" style="display: none;">
+      <div class="card-header" style="margin-bottom: 0.5rem;">
+        <div>
+          <h3 class="card-title" id="recsTitle">🎯 Your AI Recommendations</h3>
+          <p class="card-subtitle" id="recsSubtitle">Ranked by Neural Collaborative Filtering interaction probability.</p>
+        </div>
+        <div id="recommendationMeta" style="font-size: 0.825rem; color: var(--text-muted);"></div>
+      </div>
+
+      <!-- Explanation Box -->
+      <div class="alert alert-info">
+        <span class="alert-icon">ℹ️</span>
+        <div>
+          <strong>Model Explanation:</strong> Recommendations are generated by a Neural Collaborative Filtering model trained on historical customer-item purchase interactions.
+        </div>
+      </div>
+
+      <!-- Recommendation Cards Grid -->
+      <div id="recommendationsGrid" class="recs-grid"></div>
+    </div>
+
+    <!-- Empty Initial State -->
+    <div id="initialState" class="state-box">
+      <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🤖</div>
+      <h4 class="state-title">No Recommendations Generated Yet</h4>
+      <p class="state-desc">Select a customer above or click one of the quick presets, then click "Generate AI Recommendations" to run inference.</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div>
+        <strong>RetailRec India</strong> &copy; 2026 &bull; Real Indian E-Commerce Neural Recommender
+      </div>
+      <div class="footer-tech">
+        <span>TensorFlow / Keras 3</span>
+        <span>Neural Collaborative Filtering</span>
+        <span>FastAPI</span>
+        <span>Render Ready</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/recommendations.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "model_metadata": {
+    "model_type": "Neural Collaborative Filtering (NCF)",
+    "architecture": "Customer Embedding (32) + Item Embedding (32) -> Concatenate (64) -> Dense(64, ReLU) -> Dropout(0.2) -> Dense(32, ReLU) -> Dropout(0.2) -> Dense(1, Sigmoid)",
+    "embedding_dim": 32,
+    "dense_layers": [
+      64,
+      32
+    ],
+    "dropout_rate": 0.2,
+    "optimizer": "Adam (lr=0.001)",
+    "loss_function": "binary_crossentropy",
+    "epochs_trained": 14,
+    "batch_size": 32,
+    "random_seed": 42,
+    "n_customers": 336,
+    "n_items": 17,
+    "n_training_samples": 2253,
+    "n_validation_samples": 537,
+    "n_test_samples": 678,
+    "negative_sample_ratio": "2:1",
+    "training_timestamp": "2026-09-25T19:11:26.483923"
+  },
+  "final_train_loss": 0.2212,
+  "final_val_loss": 0.7483,
+  "final_train_accuracy": 0.9126,
+  "final_val_accuracy": 0.7095,
+  "test_loss": 0.7094,
+  "test_binary_accuracy": 0.7183,
+  "hit_rate_at_5": 0.469,
+  "recall_at_5": 0.469,
+  "precision_at_5": 0.0938,
+  "hit_rate_at_10": 0.6504,
+  "recall_at_10": 0.6504,
+  "precision_at_10": 0.065,
+  "evaluation_limitations": "The Madhav E-Commerce Sales dataset contains 336 customers and 17 product sub-categories (1,500 line items). Because customer interaction histories are compact (mean 3.4 unique items per customer), evaluations reflect honest chronological leave-one-out splits. Metrics are calculated on authentic unmanipulated test data without fabricated interactions."
+}

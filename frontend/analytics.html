@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales & Interaction Analytics | RetailRec India</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand">
+        <div class="brand-icon">₹</div>
+        <div class="brand-text">
+          <h1>RetailRec India <span class="brand-badge">NCF Engine</span></h1>
+          <p>Deep Learning-Based Personalized Recommendation System</p>
+        </div>
+      </a>
+      <nav class="main-nav">
+        <a href="/">Dashboard</a>
+        <a href="/recommendations">AI Recommendations</a>
+        <a href="/history">Customer History</a>
+        <a href="/products">Product Explorer</a>
+        <a href="/analytics" class="active">Analytics</a>
+        <a href="/model">Model Performance</a>
+        <a href="/about">About</a>
+      </nav>
+      <div class="nav-status">
+        <span class="status-dot"></span>
+        <span>Analytics Engine</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-tag">📊 Full E-Commerce Intelligence</div>
+        <h2>Sales & Interaction Analytics</h2>
+        <p>Comprehensive breakdown of consumer demand, seasonal trends, product margins, geographic distribution, and payment behavior across the authentic 2018 Indian sales dataset.</p>
+      </div>
+    </section>
+
+    <!-- Top KPI Highlights -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Gross Revenue</span>
+          <div class="kpi-icon green">₹</div>
+        </div>
+        <div class="kpi-value" id="analyticsSales">₹4,37,771</div>
+        <div class="kpi-sub">Total 2018 revenue</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Total Profit</span>
+          <div class="kpi-icon blue">📈</div>
+        </div>
+        <div class="kpi-value" id="analyticsProfit">₹36,963</div>
+        <div class="kpi-sub">8.44% overall margin</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Orders</span>
+          <div class="kpi-icon purple">📦</div>
+        </div>
+        <div class="kpi-value" id="analyticsOrders">500</div>
+        <div class="kpi-sub">Completed transactions</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-header">
+          <span class="kpi-title">Avg Order Value</span>
+          <div class="kpi-icon cyan">💳</div>
+        </div>
+        <div class="kpi-value" id="analyticsAov">₹875.54</div>
+        <div class="kpi-sub">Basket size average</div>
+      </div>
+    </section>
+
+    <!-- Charts Section -->
+    <div class="charts-grid">
+      <!-- Monthly Trend -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Monthly Revenue vs. Net Profit</h4>
+            <p class="card-subtitle">Monthly sales fluctuation over calendar year 2018</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="analyticsMonthlyChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Category Share -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Category Revenue Contribution</h4>
+            <p class="card-subtitle">Relative sales percentage by major segment</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="analyticsCategoryChart"></canvas>
+        </div>
+      </div>
+
+      <!-- State Geographic Sales -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Geographical Overview (Top States)</h4>
+            <p class="card-subtitle">State-level sales volume in Indian Rupees</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="analyticsStateChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Payment Mode Breakdown -->
+      <div class="chart-card">
+        <div class="card-header">
+          <div>
+            <h4 class="card-title">Payment Method Analysis</h4>
+            <p class="card-subtitle">Cash on delivery, UPI, credit, debit, EMI distribution</p>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="analyticsPaymentChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Performance Table -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">🏷️ Category Performance Overview</h3>
+          <p class="card-subtitle">Aggregated totals across all 3 authentic retail categories.</p>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Total Revenue</th>
+              <th>Total Profit</th>
+              <th>Quantity Sold</th>
+              <th>Revenue Share</th>
+            </tr>
+          </thead>
+          <tbody id="categoryTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Top Sub-Categories Table -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <h3 class="card-title">🏆 Top 10 Product Sub-Categories</h3>
+          <p class="card-subtitle">Ranked by gross sales volume.</p>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Sub-Category</th>
+              <th>Category</th>
+              <th>Total Sales</th>
+              <th>Units Sold</th>
+              <th>Avg Line Price</th>
+              <th>Customers</th>
+            </tr>
+          </thead>
+          <tbody id="topSubcatTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div>
+        <strong>RetailRec India</strong> &copy; 2026 &bull; Authentic Sales Analytics
+      </div>
+      <div class="footer-tech">
+        <span>Chart.js</span>
+        <span>FastAPI</span>
+        <span>Pandas</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/analytics.js"></script>
+</body>
+</html>
